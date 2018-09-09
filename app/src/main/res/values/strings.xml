@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">What\'s the weather like?</string>
+    <string name="button">WEATHER</string>
 </resources>
