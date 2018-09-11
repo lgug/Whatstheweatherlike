@@ -11,9 +11,9 @@ import weather.whatstheweatherlike.services.DataManager;
 
 public class DataManagerTest {
 
-    @Test
-    public void test() throws IOException, JSONException {
-        DataManager dataManager = new DataManager();
-        List<City> cityList = dataManager.getCityList();
-    }
+//    @Test
+//    public void test() throws IOException, JSONException {
+//        DataManager dataManager = new DataManager();
+//        List<City> cityList = dataManager.getCityList();
+//    }
 }

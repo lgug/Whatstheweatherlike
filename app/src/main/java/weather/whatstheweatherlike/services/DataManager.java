@@ -1,5 +1,6 @@
 package weather.whatstheweatherlike.services;
 
+import android.arch.persistence.room.RoomDatabase;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -12,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import weather.whatstheweatherlike.AppDatabase;
 import weather.whatstheweatherlike.beans.City;
 
 public class DataManager {
@@ -38,6 +40,12 @@ public class DataManager {
         }
 
         return cities;
+    }
+
+    public void insertCitiesIntoDatabase(List<City> cityList, AppDatabase appDatabase) {
+        for (City city: cityList) {
+            appDatabase.cityDao().insertCity(city);
+        }
     }
 
 }
