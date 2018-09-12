@@ -1,5 +1,8 @@
 package weather.whatstheweatherlike.activities;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,10 +18,18 @@ import weather.whatstheweatherlike.services.WeatherManager;
 
 public class WeatherActivity extends AppCompatActivity {
 
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        fragmentManager = getSupportFragmentManager();
+        Fragment inputsFragment = fragmentManager.findFragmentById(R.id.fragment);
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.commit();
 
         final Button goButton = findViewById(R.id.button2);
         goButton.setOnClickListener(new View.OnClickListener() {
