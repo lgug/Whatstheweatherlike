@@ -21,6 +21,11 @@ public class WeatherManager {
     private final static String KEY = "ba331c2494b96ae8ddaefdc0f839c18d";
     private final static String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?";
 
+    public String getWeather(String city) throws IOException {
+        String[] nc = city.split(",");
+        return getWeather(new City(null, nc[0], nc[1], null, null));
+    }
+
     public String getWeather(City city) throws IOException {
         String place = city.getName() + "," + city.getCountry();
         URL url = new URL(WEATHER_URL + "q=" + place + "&appid=" + KEY);
@@ -33,6 +38,11 @@ public class WeatherManager {
             byteArrayOutputStream.write(buffer, 0, length);
         }
         return byteArrayOutputStream.toString();
+    }
+
+    public Weather adaptJsonToWeather(String json, String city) throws JSONException {
+        String[] nc = city.split(",");
+        return adaptJsonToWeather(json, new City(null, nc[0], nc[1], null, null));
     }
 
     public Weather adaptJsonToWeather(String json, City city) throws JSONException {

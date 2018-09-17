@@ -37,11 +37,20 @@ public class MainActivity extends AppCompatActivity {
 //        } catch (IOException ignored) {
 //        } catch (JSONException ignored) {}
 
+//        Button weatherButton = findViewById(R.id.button);
+//        weatherButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
         Button weatherButton = findViewById(R.id.button);
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WeatherInputsActivity.class);
                 startActivity(intent);
             }
         });
