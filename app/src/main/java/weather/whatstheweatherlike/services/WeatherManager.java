@@ -1,5 +1,7 @@
 package weather.whatstheweatherlike.services;
 
+import android.os.AsyncTask;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,16 +9,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import weather.whatstheweatherlike.beans.City;
 import weather.whatstheweatherlike.beans.Temperature;
+import weather.whatstheweatherlike.beans.Timing;
 import weather.whatstheweatherlike.beans.Weather;
 import weather.whatstheweatherlike.enums.WeatherStatus;
 import weather.whatstheweatherlike.utils.Converter;
 
-public class WeatherManager {
+public class WeatherManager extends AsyncTask<City, Void, String> {
 
     private final static String KEY = "ba331c2494b96ae8ddaefdc0f839c18d";
     private final static String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?";
@@ -51,11 +55,18 @@ public class WeatherManager {
         JSONObject root = new JSONObject(json);
         JSONObject mainObject = root.getJSONObject("main");
         JSONObject weatherObject = root.getJSONArray("weather").getJSONObject(0);
+        JSONObject sysObject = root.getJSONObject("sys");
 
         Temperature temperature = new Temperature(
                 Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp"))),
                 Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp_min"))),
                 Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp_max")))
+        );
+
+        Timing timing = new Timing(
+                new Date(root.getLong("dt")),
+                new Date(sysObject.getLong("sunrise")),
+                new Date(sysObject.getLong("sunset"))
         );
 
         weather.setCity(city);
@@ -65,8 +76,17 @@ public class WeatherManager {
         weather.setHumidity(mainObject.getInt("humidity"));
         weather.setWindSpeed((float)(root.getJSONObject("wind").getDouble("speed")));
         weather.setTemperature(temperature);
+        weather.setTiming(timing);
 
         return weather;
     }
 
+    @Override
+    protected String doInBackground(City... cities) {
+        try {
+            return getWeather(cities[0]);
+        } catch (IOException e) {
+            return null;
+        }
+    }
 }
