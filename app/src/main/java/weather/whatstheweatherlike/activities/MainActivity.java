@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-        if (!db.populateWithCities())
+        if (!db.populateWithCities(getApplicationContext()))
             Toast.makeText(getApplicationContext(),"Unable to retrieve city list. Retry!", Toast.LENGTH_LONG).show();
 
         Button weatherButton = findViewById(R.id.button);

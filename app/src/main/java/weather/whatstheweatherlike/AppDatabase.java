@@ -31,11 +31,11 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public boolean populateWithCities() {
+    public boolean populateWithCities(Context context) {
         DataManager dataManager = new DataManager();
         List<City> cityList = null;
         try {
-            cityList = dataManager.getCityList();
+            cityList = dataManager.getCityList(context);
             for (City city: cityList) {
                 instance.cityDao().insertCity(city);
             }
