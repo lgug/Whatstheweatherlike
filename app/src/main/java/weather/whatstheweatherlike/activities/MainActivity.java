@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -27,25 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-//                AppDatabase.class, "wtwl").build();
-//
-//        DataManager dataManager = new DataManager();
-//        try {
-//            List<City> cityList = dataManager.getCityList();
-//            dataManager.insertCitiesIntoDatabase(cityList, db);
-//        } catch (IOException ignored) {
-//        } catch (JSONException ignored) {}
+        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+        if (!db.populateWithCities())
+            Toast.makeText(getApplicationContext(),"Unable to retrieve city list. Retry!", Toast.LENGTH_LONG).show();
 
-//        Button weatherButton = findViewById(R.id.button);
-//        weatherButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
         Button weatherButton = findViewById(R.id.button);
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override

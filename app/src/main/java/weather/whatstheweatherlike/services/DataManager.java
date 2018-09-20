@@ -7,6 +7,8 @@ import android.support.annotation.RequiresApi;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -23,7 +25,8 @@ public class DataManager {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public List<City> getCityList() throws IOException, JSONException {
-        String file = "src/main/res/city.list.json";
+        String file = "src/main/res/files/city.list.json";
+        File ff = new File(file);
 
         List<City> cities = new ArrayList<>();
         String json = new String(Files.readAllBytes(Paths.get(file)));
@@ -43,9 +46,7 @@ public class DataManager {
     }
 
     public void insertCitiesIntoDatabase(List<City> cityList, AppDatabase appDatabase) {
-        for (City city: cityList) {
-            appDatabase.cityDao().insertCity(city);
-        }
+
     }
 
 }
