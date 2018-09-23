@@ -5,14 +5,16 @@ import java.util.Date;
 public class Timing {
 
     private Date operationTime;
+    private Date currentTime;
     private Date sunriseTime;
     private Date sunsetTime;
 
     public Timing() {
     }
 
-    public Timing(Date operationTime, Date sunriseTime, Date sunsetTime) {
+    public Timing(Date operationTime, Date currentTime, Date sunriseTime, Date sunsetTime) {
         this.operationTime = operationTime;
+        this.currentTime = currentTime;
         this.sunriseTime = sunriseTime;
         this.sunsetTime = sunsetTime;
     }
@@ -23,6 +25,14 @@ public class Timing {
 
     public void setOperationTime(Date operationTime) {
         this.operationTime = operationTime;
+    }
+
+    public Date getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(Date currentTime) {
+        this.currentTime = currentTime;
     }
 
     public Date getSunriseTime() {

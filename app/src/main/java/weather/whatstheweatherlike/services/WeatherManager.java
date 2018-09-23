@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -64,9 +65,10 @@ public class WeatherManager extends AsyncTask<City, Void, String> {
         );
 
         Timing timing = new Timing(
-                new Date(root.getLong("dt")),
-                new Date(sysObject.getLong("sunrise")),
-                new Date(sysObject.getLong("sunset"))
+                new Date(TimeUnit.MILLISECONDS.convert(root.getLong("dt"), TimeUnit.SECONDS)),
+                new Date(),
+                new Date(TimeUnit.MILLISECONDS.convert(sysObject.getLong("sunrise"), TimeUnit.SECONDS)),
+                new Date(TimeUnit.MILLISECONDS.convert(sysObject.getLong("sunset"), TimeUnit.SECONDS))
         );
 
         weather.setCity(city);

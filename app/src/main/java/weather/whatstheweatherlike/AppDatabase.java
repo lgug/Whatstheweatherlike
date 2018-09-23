@@ -33,7 +33,7 @@ public abstract class AppDatabase extends RoomDatabase {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean populateWithCities(Context context) {
         DataManager dataManager = new DataManager();
-        List<City> cityList = null;
+        List<City> cityList;
         try {
             cityList = dataManager.getCityList(context);
             for (City city: cityList) {

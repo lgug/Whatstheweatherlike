@@ -29,7 +29,7 @@ public class WeatherResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather_result);
 
         weatherManager = new WeatherManager();
-        Weather weather = null;
+        Weather weather;
 
         String city = getIntent().getStringExtra("city");
         String date = getIntent().getStringExtra("date");
@@ -44,11 +44,16 @@ public class WeatherResultActivity extends AppCompatActivity {
                 ImageView imageView = findViewById(R.id.imageView);
                 TextView title = findViewById(R.id.textView8);
                 TextView subtitle = findViewById(R.id.textView7);
+                boolean isNight = !(
+                        weather.getTiming().getCurrentTime().after(weather.getTiming().getSunriseTime())
+                        && weather.getTiming().getCurrentTime().before(weather.getTiming().getSunsetTime())
+                );
 
                 subtitle.setText(weather.getWeatherDescription());
                 switch (weather.getWeather()) {
                     case CLEAR:
-                        imageView.setImageResource(R.drawable.daily_clear);
+                        if (isNight) imageView.setImageResource(R.drawable.nightly_clear);
+                        else imageView.setImageResource(R.drawable.daily_clear);
                         title.setText(WeatherStatus.CLEAR.toString());
                         break;
                     case SNOW:
@@ -70,11 +75,14 @@ public class WeatherResultActivity extends AppCompatActivity {
                         break;
                     case CLOUDS:
                         if (subtitle.getText().equals("few clouds")) {
-                            imageView.setImageResource(R.drawable.daily_slightly_cloudy);
+                            if (isNight) imageView.setImageResource(R.drawable.nightly_slightly_cloudy);
+                            else imageView.setImageResource(R.drawable.daily_slightly_cloudy);
                         } else if (subtitle.getText().equals("scattered clouds")) {
-                            imageView.setImageResource(R.drawable.daily_cloudiness);
+                            if (isNight) imageView.setImageResource(R.drawable.nightly_cloudiness);
+                            else imageView.setImageResource(R.drawable.daily_cloudiness);
                         } else {
-                            imageView.setImageResource(R.drawable.daily_overcast_clouds);
+                            if (isNight) imageView.setImageResource(R.drawable.nightly_cloudiness); //TODO change image resource
+                            else imageView.setImageResource(R.drawable.daily_overcast_clouds);
                         }
                         title.setText(WeatherStatus.CLOUDS.toString());
                         break;
@@ -92,6 +100,7 @@ public class WeatherResultActivity extends AppCompatActivity {
                         } else {
                             title.setText(((String) subtitle.getText()).toUpperCase());
                         }
+                        if (isNight) imageView.setImageResource(R.drawable.nightly_fog);
                         imageView.setImageResource(R.drawable.daily_fog);
                         break;
                     default:
@@ -117,7 +126,6 @@ public class WeatherResultActivity extends AppCompatActivity {
         } catch (Exception e) {
             errorScreen("Error during the operation!");
         }
-
     }
 
     private void errorScreen(String message) {
