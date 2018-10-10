@@ -8,6 +8,14 @@ public enum WeatherStatus {
     DRIZZLE,
     THUNDERSTORM,
     SNOW,
-    ATMOSPHERE
 
+    //Atmosphere
+    MIST,
+    SMOKE,
+    FOG,
+    HAZE,
+    SAND,
+    DUST,
+    SQUALLS,
+    TORNADO
 }

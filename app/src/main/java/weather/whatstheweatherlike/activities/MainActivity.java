@@ -9,12 +9,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.Random;
+
 import weather.whatstheweatherlike.AppDatabase;
 import weather.whatstheweatherlike.R;
+import weather.whatstheweatherlike.services.JsonAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +30,19 @@ public class MainActivity extends AppCompatActivity {
 //        if (!db.populateWithCities(getApplicationContext()))
 //            Toast.makeText(getApplicationContext(),"Unable to retrieve city list. Retry!", Toast.LENGTH_LONG).show();
 
+        Random random = new Random();
+        int[] colors = new int[]{
+                R.color.buttonsColor01,
+                R.color.buttonsColor02,
+                R.color.buttonsColor03,
+                R.color.buttonsColor04,
+                R.color.buttonsColor05,
+                R.color.buttonsColor06
+        };
+        int color = colors[random.nextInt(colors.length)];
+
         Button weatherButton = findViewById(R.id.button);
+        weatherButton.setBackgroundColor(getColor(color));
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,11 +52,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button supportButton = findViewById(R.id.button3);
+        supportButton.setBackgroundColor(getColor(color));
         supportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SupportActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button infoAndSettingButton = findViewById(R.id.button4);
+        infoAndSettingButton.setBackgroundColor(getColor(color));
+        infoAndSettingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //...
             }
         });
     }

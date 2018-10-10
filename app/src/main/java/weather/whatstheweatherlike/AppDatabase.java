@@ -14,7 +14,9 @@ import java.util.List;
 
 import weather.whatstheweatherlike.beans.City;
 import weather.whatstheweatherlike.daos.CityDao;
-import weather.whatstheweatherlike.services.DataManager;
+import weather.whatstheweatherlike.services.JsonAdapter;
+
+import static weather.whatstheweatherlike.services.JsonAdapter.CALLBACK_METHOD;
 
 @Database(entities = {City.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
@@ -32,10 +34,10 @@ public abstract class AppDatabase extends RoomDatabase {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean populateWithCities(Context context) {
-        DataManager dataManager = new DataManager();
         List<City> cityList;
         try {
-            cityList = dataManager.getCityList(context);
+            cityList = JsonAdapter.adaptToCityList(context, "city.list.json", CALLBACK_METHOD);
+            if (cityList == null) return false;
             for (City city: cityList) {
                 instance.cityDao().insertCity(city);
             }

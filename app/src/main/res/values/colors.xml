@@ -3,5 +3,26 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="standardButtonsColor">#caffd500</color>
+    <color name="weatherResultNightTitle">#23a1f5</color>
+    <color name="weatherResultNightSubtitle">#bce4ff</color>
+
+    <color name="temperature01">#000099</color>
+    <color name="temperature02">#6699ff</color>
+    <color name="temperature03">#00ff55</color>
+    <color name="temperature04">#ffd633</color>
+    <color name="temperature05">#ff6600</color>
+    <color name="temperature06">#ff0000</color>
+
+    <color name="temperatureMin">#000080</color>
+    <color name="temperatureMax">#b30000</color>
+
+    <color name="buttonsColor01">#caffd500</color>
+    <color name="buttonsColor02">#ca00cc00</color>
+    <color name="buttonsColor03">#cab30000</color>
+    <color name="buttonsColor04">#ca1a75ff</color>
+    <color name="buttonsColor05">#cab84dff</color>
+    <color name="buttonsColor06">#ca262626</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 </resources>

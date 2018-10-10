@@ -1,6 +1,10 @@
 package weather.whatstheweatherlike.activities;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +18,7 @@ import java.io.IOException;
 
 import weather.whatstheweatherlike.R;
 import weather.whatstheweatherlike.beans.City;
+import weather.whatstheweatherlike.beans.Temperature;
 import weather.whatstheweatherlike.beans.Weather;
 import weather.whatstheweatherlike.enums.WeatherStatus;
 import weather.whatstheweatherlike.services.WeatherManager;
@@ -22,7 +27,8 @@ public class WeatherResultActivity extends AppCompatActivity {
 
     WeatherManager weatherManager;
 
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint({"SetTextI18n", "ResourceAsColor"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,35 +96,66 @@ public class WeatherResultActivity extends AppCompatActivity {
                         imageView.setImageResource(R.drawable.thunderstorm);
                         title.setText(WeatherStatus.THUNDERSTORM.toString());
                         break;
-                    case ATMOSPHERE:
-                        if (subtitle.getText().equals("mist") || subtitle.getText().equals("haze") ||
-                                subtitle.getText().equals("fog") || subtitle.getText().equals("smoke")) {
-                            title.setText("FOG");
-                        } else if (subtitle.getText().equals("dust") || subtitle.getText().equals("sand, dust whirls") ||
-                                subtitle.getText().equals("sand") || subtitle.getText().equals("volcanic ash")) {
-                            title.setText("DUSTY");
-                        } else {
-                            title.setText(((String) subtitle.getText()).toUpperCase());
-                        }
-                        if (isNight) imageView.setImageResource(R.drawable.nightly_fog);
-                        imageView.setImageResource(R.drawable.daily_fog);
+                    case MIST:
+                        setAtmosphereCase(WeatherStatus.MIST, isNight);
                         break;
+                    case FOG:
+                        setAtmosphereCase(WeatherStatus.FOG, isNight);
+                        break;
+                    case DUST:
+                        setAtmosphereCase(WeatherStatus.DUST, isNight);
+                        break;
+                    case HAZE:
+                        setAtmosphereCase(WeatherStatus.HAZE, isNight);
+                        break;
+                    case SAND:
+                        setAtmosphereCase(WeatherStatus.SAND, isNight);
+                        break;
+                    case SMOKE:
+                        setAtmosphereCase(WeatherStatus.SMOKE, isNight);
+                        break;
+                    case SQUALLS:
+                        setAtmosphereCase(WeatherStatus.SQUALLS, isNight);
+                        break;
+                    case TORNADO:
+                        setAtmosphereCase(WeatherStatus.TORNADO, isNight);
                     default:
                         throw new Exception("Switch default case occurs");
                 }
 
-                TextView temperatureTV = findViewById(R.id.textView6);
+                TextView cityNameTV = findViewById(R.id.textView16);
                 TextView pressureTV = findViewById(R.id.textView5);
                 TextView humidityTV = findViewById(R.id.textView4);
                 TextView windSpeedTV = findViewById(R.id.textView9);
 
-                temperatureTV.setText(
-                        weather.getTemperature().getTemperature().toString() + " °C (" +
-                        weather.getTemperature().getMinTemperature().toString() + " °C - " +
-                        weather.getTemperature().getMaxTemperature().toString() + " °C)");
-                pressureTV.setText("Pressure: " + weather.getPressure().toString() + " hPa");
-                humidityTV.setText("Humidity: " + weather.getHumidity().toString() + "%");
-                windSpeedTV.setText("Wind speed: " + weather.getWindSpeed().toString() + " m/s");
+                cityNameTV.setText(weather.getCity().getName() + " (" + weather.getCity().getCountry() + ")");
+                weatherManager.setTemperatureInView(getWindow().getDecorView().getRootView(), weather.getTemperature());
+                pressureTV.setText(weather.getPressure().toString() + " hPa");
+                humidityTV.setText(weather.getHumidity().toString() + "%");
+                windSpeedTV.setText(weather.getWindSpeed().toString() + " m/s");
+
+                if (isNight) {
+                    getWindow().getDecorView().setBackgroundResource(R.drawable.hfjgd);
+                    int color = getColor(R.color.white);
+                    ((TextView) findViewById(R.id.textView13)).setTextColor(color);
+                    ((TextView) findViewById(R.id.textView14)).setTextColor(color);
+                    ((TextView) findViewById(R.id.textView15)).setTextColor(color);
+                    pressureTV.setTextColor(color);
+                    humidityTV.setTextColor(color);
+                    windSpeedTV.setTextColor(color);
+                    TextView minTempTV = findViewById(R.id.textView11);
+                    minTempTV.setShadowLayer(5, 0, 0, getColor(R.color.white));
+                    TextView maxTempTV = findViewById(R.id.textView10);
+                    maxTempTV.setShadowLayer(5, 0, 0, getColor(R.color.white));
+                    TextView avgTempTV = findViewById(R.id.textView6);
+                    avgTempTV.setShadowLayer(5, 0, 0, getColor(R.color.white));
+                    title.setTextColor(getColor(R.color.weatherResultNightTitle));
+                    title.setShadowLayer(15, 0, 0, getColor(R.color.colorPrimaryDark));
+                    subtitle.setTextColor(getColor(R.color.weatherResultNightSubtitle));
+
+                } else {
+                    getWindow().getDecorView().setBackgroundResource(R.drawable.cloudsfghgf);
+                }
 
             } else {
                 errorScreen("Unable to find the weather...");
@@ -135,5 +172,13 @@ public class WeatherResultActivity extends AppCompatActivity {
         TextView subtitle = findViewById(R.id.textView7);
         title.setVisibility(View.INVISIBLE);
         subtitle.setText(message);
+    }
+
+    private void setAtmosphereCase(WeatherStatus weatherStatus, boolean isNight) {
+        ImageView imageView = findViewById(R.id.imageView);
+        if (isNight) imageView.setImageResource(R.drawable.nightly_fog);
+        else imageView.setImageResource(R.drawable.daily_fog);
+        TextView title = findViewById(R.id.textView8);
+        title.setText(weatherStatus.toString());
     }
 }

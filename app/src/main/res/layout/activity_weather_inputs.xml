@@ -9,13 +9,14 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="209dp"
-        android:layout_height="94dp"
+        android:layout_width="225dp"
+        android:layout_height="147dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:shadowColor="@android:color/black"
         android:shadowDx="2"
@@ -25,87 +26,106 @@
         android:textColor="@android:color/white"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="81dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="332dp"
+        android:layout_height="130dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="Where?"
-        android:textColor="@android:color/holo_blue_bright"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/editText4"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editText4"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="187dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginTop="196dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Insert a city..."
+        android:layout_marginTop="204dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="186dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Insert a date..."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
-        app:layout_constraintVertical_bias="0.038" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="81dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="When?"
-        android:textColor="@android:color/holo_blue_bright"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/editText3"
-        app:layout_constraintEnd_toStartOf="@+id/editText3"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="228dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:paddingRight="5dp"
+                android:text="Where?"
+                android:textColor="@android:color/holo_blue_bright"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Insert a city..."
+                android:inputType="textPersonName"
+                android:selectAllOnFocus="true"
+                android:singleLine="false" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/ic_menu_mylocation" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="146dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="228dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:paddingRight="5dp"
+                android:text="When?"
+                android:textColor="@android:color/holo_blue_bright"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="Insert a date..."
+                android:inputType="textPersonName"
+                android:selectAllOnFocus="true"
+                android:singleLine="false" />
+
+            <Button
+                android:id="@+id/button6"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/ic_menu_my_calendar" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="185dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="104dp"
+        android:layout_width="194dp"
+        android:layout_height="118dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -116,27 +136,8 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:drawable/ic_menu_mylocation"
-        app:layout_constraintBottom_toBottomOf="@+id/editText4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/editText4"
-        app:layout_constraintTop_toTopOf="@+id/editText4"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.482" />
 
 </android.support.constraint.ConstraintLayout>

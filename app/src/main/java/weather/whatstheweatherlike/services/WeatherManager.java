@@ -1,6 +1,13 @@
 package weather.whatstheweatherlike.services;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import weather.whatstheweatherlike.R;
 import weather.whatstheweatherlike.beans.City;
 import weather.whatstheweatherlike.beans.Temperature;
 import weather.whatstheweatherlike.beans.Timing;
@@ -59,9 +67,9 @@ public class WeatherManager extends AsyncTask<City, Void, String> {
         JSONObject sysObject = root.getJSONObject("sys");
 
         Temperature temperature = new Temperature(
-                Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp"))),
-                Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp_min"))),
-                Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp_max")))
+                Converter.round(Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp"))), 1),
+                Converter.round(Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp_max"))), 1),
+                Converter.round(Converter.fromKelvinToCelsius((float)(mainObject.getDouble("temp_min"))), 1)
         );
 
         Timing timing = new Timing(
@@ -81,6 +89,35 @@ public class WeatherManager extends AsyncTask<City, Void, String> {
         weather.setTiming(timing);
 
         return weather;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @SuppressLint({"SetTextI18n"})
+    public void setTemperatureInView(View view, Temperature temperature) {
+        TextView minTemperature = view.findViewById(R.id.textView11);
+        TextView maxTemperature = view.findViewById(R.id.textView6);
+        TextView avgTemperature = view.findViewById(R.id.textView10);
+
+        int color = R.color.black;
+        if (temperature.getTemperature() < 0) {
+            color = R.color.temperature01;
+        } else if (temperature.getTemperature() >= 0 && temperature.getTemperature() < 12) {
+            color = R.color.temperature02;
+        } else if (temperature.getTemperature() >= 12 && temperature.getTemperature() < 22) {
+            color = R.color.temperature03;
+        } else if (temperature.getTemperature() >= 22 && temperature.getTemperature() < 30) {
+            color = R.color.temperature04;
+        } else if (temperature.getTemperature() >= 30 && temperature.getTemperature() < 36) {
+            color = R.color.temperature05;
+        } else if (temperature.getTemperature() >= 36) {
+            color = R.color.temperature06;
+        }
+        avgTemperature.setText(temperature.getTemperature() + " °C");
+        avgTemperature.setTextColor(view.getContext().getResources().getColor(color, null));
+        minTemperature.setText(temperature.getMinTemperature() + " °C");
+        minTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMin, null));
+        maxTemperature.setText(temperature.getMaxTemperature() + " °C");
+        maxTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMax, null));
     }
 
     @Override

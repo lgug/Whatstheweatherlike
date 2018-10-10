@@ -10,4 +10,9 @@ public class Converter {
         return kelvin - 273.15F;
     }
 
+    public static Float round(Float number, int decimals) {
+        double tempNumber = number * Math.pow(10, decimals);
+        return (float) (Math.round(tempNumber) / Math.pow(10, decimals));
+    }
+
 }
