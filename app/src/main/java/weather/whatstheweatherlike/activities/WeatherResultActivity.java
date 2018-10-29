@@ -21,6 +21,7 @@ import weather.whatstheweatherlike.beans.City;
 import weather.whatstheweatherlike.beans.Temperature;
 import weather.whatstheweatherlike.beans.Weather;
 import weather.whatstheweatherlike.enums.WeatherStatus;
+import weather.whatstheweatherlike.services.JsonAdapter;
 import weather.whatstheweatherlike.services.WeatherManager;
 
 public class WeatherResultActivity extends AppCompatActivity {
@@ -36,15 +37,13 @@ public class WeatherResultActivity extends AppCompatActivity {
 
         weatherManager = new WeatherManager();
         Weather weather;
+        City city;
+        String date;
 
-        String city = getIntent().getStringExtra("city");
-        String date = getIntent().getStringExtra("date");
         try {
-            /* temporary - begin */
-            String[] nc = city.split(",");
-            City tempCity = new City(null, nc[0], nc[1], null, null);
-            /* temporary - end */
-            String jsonResult = weatherManager.execute(tempCity).get();
+            city = JsonAdapter.toObject(getIntent().getStringExtra("city"), City.class);
+            date = getIntent().getStringExtra("date");
+            String jsonResult = weatherManager.execute(city).get();
             weather = weatherManager.adaptJsonToWeather(jsonResult, city);
             if (weather != null) {
                 ImageView imageView = findViewById(R.id.imageView);
@@ -135,7 +134,7 @@ public class WeatherResultActivity extends AppCompatActivity {
                 windSpeedTV.setText(weather.getWindSpeed().toString() + " m/s");
 
                 if (isNight) {
-                    getWindow().getDecorView().setBackgroundResource(R.drawable.hfjgd);
+                    getWindow().getDecorView().setBackgroundResource(R.drawable.fh);
                     int color = getColor(R.color.white);
                     ((TextView) findViewById(R.id.textView13)).setTextColor(color);
                     ((TextView) findViewById(R.id.textView14)).setTextColor(color);
@@ -144,11 +143,11 @@ public class WeatherResultActivity extends AppCompatActivity {
                     humidityTV.setTextColor(color);
                     windSpeedTV.setTextColor(color);
                     TextView minTempTV = findViewById(R.id.textView11);
-                    minTempTV.setShadowLayer(5, 0, 0, getColor(R.color.white));
-                    TextView maxTempTV = findViewById(R.id.textView10);
-                    maxTempTV.setShadowLayer(5, 0, 0, getColor(R.color.white));
-                    TextView avgTempTV = findViewById(R.id.textView6);
+                    minTempTV.setTextColor(getColor(R.color.temperatureMin_night));
+                    TextView avgTempTV = findViewById(R.id.textView10);
                     avgTempTV.setShadowLayer(5, 0, 0, getColor(R.color.white));
+                    TextView maxTempTV = findViewById(R.id.textView6);
+                    maxTempTV.setTextColor(getColor(R.color.temperatureMax_night));
                     title.setTextColor(getColor(R.color.weatherResultNightTitle));
                     title.setShadowLayer(15, 0, 0, getColor(R.color.colorPrimaryDark));
                     subtitle.setTextColor(getColor(R.color.weatherResultNightSubtitle));

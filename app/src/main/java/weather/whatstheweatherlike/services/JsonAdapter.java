@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,7 +28,6 @@ public class JsonAdapter {
 
     public final static int TREE_METHOD = 1;
     public final static int CALLBACK_METHOD = 2;
-
 
     public static List<City> adaptToCityList(Context context, String jsonFileName, int method) throws JSONException, IOException {
         List<City> cities = new ArrayList<>();
@@ -74,6 +75,28 @@ public class JsonAdapter {
             default:
                 return null;
         }
+    }
+
+    public static <T> String toJson(T object) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String s = null;
+        try {
+            s = objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+
+    public static <T> T toObject(String json, Class<T> tClass){
+        ObjectMapper objectMapper = new ObjectMapper();
+        T t = null;
+        try {
+            t = objectMapper.readValue(json, tClass);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return t;
     }
 
 }

@@ -6,23 +6,38 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonWriter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import weather.whatstheweatherlike.R;
+import weather.whatstheweatherlike.beans.City;
+import weather.whatstheweatherlike.beans.CityList;
+import weather.whatstheweatherlike.services.CitiesManager;
+import weather.whatstheweatherlike.services.JsonAdapter;
 
 public class WeatherInputsActivity extends AppCompatActivity {
 
+    private CitiesManager citiesManager;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private String coords;
 
@@ -57,18 +72,26 @@ public class WeatherInputsActivity extends AppCompatActivity {
             }
         });
 
+        citiesManager = new CitiesManager();
         Button goButton = findViewById(R.id.button2);
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String city = ((EditText) findViewById(R.id.editText4)).getText().toString();
+                citiesManager.setCityName(city);
+                List<City> cities = null;
+                try {
+                    cities = citiesManager.execute().get();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+
                 String date = ((EditText) findViewById(R.id.editText3)).getText().toString();
 
-                Intent intent = new Intent(getApplicationContext(), WeatherResultActivity.class);
-                intent.putExtra("city", city);
-                intent.putExtra("date", date);
-                intent.putExtra("location", coords);
-                startActivity(intent);
+                Intent popUpIntent = new Intent(getApplicationContext(), CityListActivity.class);
+                popUpIntent.putExtra("cities", JsonAdapter.toJson(new CityList(cities)));
+                popUpIntent.putExtra("date", date);
+                startActivity(popUpIntent);
             }
         });
 

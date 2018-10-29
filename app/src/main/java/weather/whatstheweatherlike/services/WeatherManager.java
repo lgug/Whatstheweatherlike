@@ -115,9 +115,9 @@ public class WeatherManager extends AsyncTask<City, Void, String> {
         avgTemperature.setText(temperature.getTemperature() + " °C");
         avgTemperature.setTextColor(view.getContext().getResources().getColor(color, null));
         minTemperature.setText(temperature.getMinTemperature() + " °C");
-        minTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMin, null));
+        minTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMin_day, null));
         maxTemperature.setText(temperature.getMaxTemperature() + " °C");
-        maxTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMax, null));
+        maxTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMax_day, null));
     }
 
     @Override

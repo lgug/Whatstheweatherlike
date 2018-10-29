@@ -13,8 +13,10 @@
     <color name="temperature05">#ff6600</color>
     <color name="temperature06">#ff0000</color>
 
-    <color name="temperatureMin">#000080</color>
-    <color name="temperatureMax">#b30000</color>
+    <color name="temperatureMin_day">#000080</color>
+    <color name="temperatureMax_day">#b30000</color>
+    <color name="temperatureMin_night">#7373ff</color>
+    <color name="temperatureMax_night">#e76d6d</color>
 
     <color name="buttonsColor01">#caffd500</color>
     <color name="buttonsColor02">#ca00cc00</color>
