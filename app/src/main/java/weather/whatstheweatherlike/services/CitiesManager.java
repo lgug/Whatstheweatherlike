@@ -73,7 +73,8 @@ public class CitiesManager extends AsyncTask<Void, Void, List<City>> {
 
     private List<City> getPossibleCityList() throws IOException, JSONException {
         //URL url = new URL("http://192.168.1.66:8081/api/get-cities?city=" + cityName);
-        URL url = new URL("http://" + SERVER_DNS + ":" + SERVER_PORT.toString() + "/api/get-cities?city=" + cityName);
+        String urlString = "http://" + SERVER_DNS + ":" + SERVER_PORT.toString() + "/api/get-cities?city=" + cityName;
+        URL url = new URL(urlString.replace(" ", "_"));
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.connect();
         InputStream inputStream = httpURLConnection.getInputStream();
@@ -107,6 +108,7 @@ public class CitiesManager extends AsyncTask<Void, Void, List<City>> {
         try {
             return getPossibleCityList();
         } catch (IOException | JSONException e) {
+            e.printStackTrace();
             return null;
         }
     }

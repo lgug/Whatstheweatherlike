@@ -45,7 +45,6 @@ public class JsonAdapter {
                 for(int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     City city = new City();
-                    city.setId(jsonObject.getInt("id"));
                     city.setName(jsonObject.getString("name"));
                     city.setCountry(jsonObject.getString("country"));
                     JSONObject coord = jsonObject.getJSONObject("coord");
@@ -63,7 +62,6 @@ public class JsonAdapter {
                     while (jp.nextToken() != JsonToken.END_ARRAY) {
                         City city = new City();
                         JsonNode jsonNode = jp.readValueAsTree();
-                        city.setId(jsonNode.get("id").asInt());
                         city.setName(jsonNode.get("name").asText());
                         city.setCountry(jsonNode.get("country").asText());
                         city.setLat(jsonNode.get("coord").get("lat").asDouble());

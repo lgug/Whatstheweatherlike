@@ -1,37 +1,22 @@
 package weather.whatstheweatherlike.beans;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-
-@Entity(tableName = "CITIES")
 public class City {
 
-    @PrimaryKey
-    private Integer id;
-    @ColumnInfo(name = "CITY_NAME")
     private String name;
     private String country;
+    private String countryName;
     private Double lat;
     private Double lon;
 
     public City() {
     }
 
-    public City(Integer id, String name, String country, Double lat, Double lon) {
-        this.id = id;
+    public City(String name, String country, String countryName, Double lat, Double lon) {
         this.name = name;
         this.country = country;
+        this.countryName = countryName;
         this.lat = lat;
         this.lon = lon;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -48,6 +33,14 @@ public class City {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
     public Double getLat() {

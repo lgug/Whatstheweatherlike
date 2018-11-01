@@ -3,6 +3,7 @@ package weather.whatstheweatherlike.activities;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 import weather.whatstheweatherlike.R;
 import weather.whatstheweatherlike.beans.City;
+import weather.whatstheweatherlike.beans.Coords;
 import weather.whatstheweatherlike.beans.Temperature;
 import weather.whatstheweatherlike.beans.Weather;
 import weather.whatstheweatherlike.enums.WeatherStatus;
@@ -39,9 +41,17 @@ public class WeatherResultActivity extends AppCompatActivity {
         Weather weather;
         City city;
         String date;
+        Coords location;
 
         try {
-            city = JsonAdapter.toObject(getIntent().getStringExtra("city"), City.class);
+            location = JsonAdapter.toObject(getIntent().getStringExtra("location"), Coords.class);
+            if (location != null) {
+                city = new City();
+                city.setLat(location.getLatitude());
+                city.setLon(location.getLongitude());
+            } else {
+                city = JsonAdapter.toObject(getIntent().getStringExtra("city"), City.class);
+            }
             date = getIntent().getStringExtra("date");
             String jsonResult = weatherManager.execute(city).get();
             weather = weatherManager.adaptJsonToWeather(jsonResult, city);

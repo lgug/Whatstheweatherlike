@@ -7,16 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.Random;
 
-import weather.whatstheweatherlike.AppDatabase;
 import weather.whatstheweatherlike.R;
-import weather.whatstheweatherlike.services.JsonAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,10 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-//        if (!db.populateWithCities(getApplicationContext()))
-//            Toast.makeText(getApplicationContext(),"Unable to retrieve city list. Retry!", Toast.LENGTH_LONG).show();
 
         Random random = new Random();
         int[] colors = new int[]{

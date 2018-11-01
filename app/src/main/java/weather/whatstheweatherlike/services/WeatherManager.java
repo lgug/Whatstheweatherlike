@@ -40,8 +40,11 @@ public class WeatherManager extends AsyncTask<City, Void, String> {
     }
 
     public String getWeather(City city) throws IOException {
-        String place = city.getName() + "," + city.getCountry();
-        URL url = new URL(WEATHER_URL + "q=" + place + "&appid=" + KEY);
+        URL url = new URL(WEATHER_URL +
+                "lat=" + city.getLat() + "&" +
+                "lon=" + city.getLon() + "&" +
+                "appid=" + KEY
+        );
         HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
         InputStream inputStream = httpsURLConnection.getInputStream();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -51,11 +54,6 @@ public class WeatherManager extends AsyncTask<City, Void, String> {
             byteArrayOutputStream.write(buffer, 0, length);
         }
         return byteArrayOutputStream.toString();
-    }
-
-    public Weather adaptJsonToWeather(String json, String city) throws JSONException {
-        String[] nc = city.split(",");
-        return adaptJsonToWeather(json, new City(null, nc[0], nc[1], null, null));
     }
 
     public Weather adaptJsonToWeather(String json, City city) throws JSONException {
