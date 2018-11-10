@@ -5,18 +5,20 @@ public class City {
     private String name;
     private String country;
     private String countryName;
-    private Double lat;
-    private Double lon;
+    private Coords coords;
 
     public City() {
     }
 
-    public City(String name, String country, String countryName, Double lat, Double lon) {
+    public City(Coords coords) {
+        this.coords = coords;
+    }
+
+    public City(String name, String country, String countryName, Coords coords) {
         this.name = name;
         this.country = country;
         this.countryName = countryName;
-        this.lat = lat;
-        this.lon = lon;
+        this.coords = coords;
     }
 
     public String getName() {
@@ -43,19 +45,11 @@ public class City {
         this.countryName = countryName;
     }
 
-    public Double getLat() {
-        return lat;
+    public Coords getCoords() {
+        return coords;
     }
 
-    public void setLat(Double lat) {
-        this.lat = lat;
-    }
-
-    public Double getLon() {
-        return lon;
-    }
-
-    public void setLon(Double lon) {
-        this.lon = lon;
+    public void setCoords(Coords coords) {
+        this.coords = coords;
     }
 }

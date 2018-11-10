@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import weather.whatstheweatherlike.beans.City;
+import weather.whatstheweatherlike.beans.Coords;
 
 public class JsonAdapter {
 
@@ -48,8 +49,10 @@ public class JsonAdapter {
                     city.setName(jsonObject.getString("name"));
                     city.setCountry(jsonObject.getString("country"));
                     JSONObject coord = jsonObject.getJSONObject("coord");
-                    city.setLat(coord.getDouble("lat"));
-                    city.setLon(coord.getDouble("lon"));
+                    Coords coords = new Coords();
+                    coords.setLatitude(coord.getDouble("lat"));
+                    coords.setLongitude(coord.getDouble("lon"));
+                    city.setCoords(coords);
                     cities.add(city);
                 }
                 return cities;
@@ -64,8 +67,9 @@ public class JsonAdapter {
                         JsonNode jsonNode = jp.readValueAsTree();
                         city.setName(jsonNode.get("name").asText());
                         city.setCountry(jsonNode.get("country").asText());
-                        city.setLat(jsonNode.get("coord").get("lat").asDouble());
-                        city.setLon(jsonNode.get("coord").get("lon").asDouble());
+                        Coords coords = new Coords();
+                        coords.setLatitude(jsonNode.get("coord").get("lat").asDouble());
+                        coords.setLongitude(jsonNode.get("coord").get("lon").asDouble());
                         cities.add(city);
                     }
                 }

@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CalendarSpinner" parent="@android:style/Widget.Spinner">
+    </style>
+
 </resources>

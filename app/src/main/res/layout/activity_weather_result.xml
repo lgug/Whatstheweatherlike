@@ -99,6 +99,7 @@
                     android:textStyle="italic" />
 
                 <LinearLayout
+                    android:id="@+id/linearL1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
@@ -157,6 +158,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearL2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -191,6 +193,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/LinearL3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -226,6 +229,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearL4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">

@@ -1,4 +1,28 @@
 <resources>
     <string name="app_name">What\'s the weather like?</string>
     <string name="button">LOOK AT THE WEATHER</string>
+
+    <string-array name="temperature_array">
+        <item>Celsius (°C)</item>
+        <item>Fahrenheit (°F)</item>
+        <item>Kelvin (K)</item>
+    </string-array>
+    <string-array name="pressure_array">
+        <item>hPa</item>
+        <item>N/m²</item>
+        <item>Bar</item>
+    </string-array>
+    <string-array name="windsped_array">
+        <item>m/s</item>
+        <item>mph</item>
+        <item>km/h</item>
+        <item>Knots</item>
+    </string-array>
+    <string-array name="language_array">
+        <item>English</item>
+    </string-array>
+    <string-array name="calendar_array">
+        <item>NOW</item>
+    </string-array>
+
 </resources>

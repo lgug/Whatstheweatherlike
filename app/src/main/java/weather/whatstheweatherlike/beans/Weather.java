@@ -4,7 +4,6 @@ import weather.whatstheweatherlike.enums.WeatherStatus;
 
 public class Weather {
 
-    private City city;
     private Timing timing;
     private WeatherStatus weather;
     private String weatherDescription;
@@ -16,9 +15,7 @@ public class Weather {
     public Weather() {
     }
 
-    public Weather(City city, Timing timing, WeatherStatus weather, String weatherDescription,
-                   Temperature temperature, Integer humidity, Float pressure, Float windSpeed) {
-        this.city = city;
+    public Weather(Timing timing, WeatherStatus weather, String weatherDescription, Temperature temperature, Integer humidity, Float pressure, Float windSpeed) {
         this.timing = timing;
         this.weather = weather;
         this.weatherDescription = weatherDescription;
@@ -26,14 +23,6 @@ public class Weather {
         this.humidity = humidity;
         this.pressure = pressure;
         this.windSpeed = windSpeed;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
     }
 
     public Timing getTiming() {
