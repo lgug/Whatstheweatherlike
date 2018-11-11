@@ -57,6 +57,7 @@ import weather.whatstheweatherlike.beans.Temperature;
 import weather.whatstheweatherlike.beans.WeatherDate;
 import weather.whatstheweatherlike.services.CitiesManager;
 import weather.whatstheweatherlike.services.JsonAdapter;
+import weather.whatstheweatherlike.services.TryConnectionManager;
 import weather.whatstheweatherlike.utils.Converter;
 
 public class WeatherInputsActivity extends AppCompatActivity {
@@ -222,7 +223,17 @@ public class WeatherInputsActivity extends AppCompatActivity {
                     nextIntent.putExtra("data", JsonAdapter.toJson(inputData));
                     startActivity(nextIntent);
                 } else {
-                    Toast.makeText(getApplicationContext(),"Error! City field is not valid", Toast.LENGTH_SHORT).show();
+                    TryConnectionManager tryConnectionManager = new TryConnectionManager();
+                    String message;
+                    try {
+                         message = tryConnectionManager.execute().get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        message = "Unknown error!";
+                    }
+                    if (message.equals("OK"))
+                        Toast.makeText(getApplicationContext(),"Error! City field is not valid", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                     goButton.setEnabled(true);
                 }
             }

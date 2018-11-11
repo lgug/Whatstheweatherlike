@@ -48,7 +48,8 @@ import weather.whatstheweatherlike.utils.Converter;
 
 public class WeatherManager extends AsyncTask<InputData, Void, Forecast> {
 
-    private final static String KEY = "ba331c2494b96ae8ddaefdc0f839c18d";
+//    private final static String KEY = "ba331c2494b96ae8ddaefdc0f839c18d";
+    private final static String KEY = "5abbab06a4bb2db86621e0f48a5ccc3d";
     private final static String CURRENT_WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?";
     private final static String FORECAST_WEATHER_URL = "https://api.openweathermap.org/data/2.5/forecast?";
 

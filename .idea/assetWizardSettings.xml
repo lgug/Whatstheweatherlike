@@ -122,9 +122,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="assetType" value="IMAGE" />
                                       <entry key="imageAsset" value="$USER_HOME$/Scaricati/halo-umbrella-hi.png" />
-                                      <entry key="outputName" value="gps_red" />
+                                      <entry key="outputName" value="logo_in_square" />
                                     </map>
                                   </option>
                                 </PersistentState>
