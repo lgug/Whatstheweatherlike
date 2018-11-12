@@ -11,11 +11,14 @@ public class Weather {
     private Integer humidity;
     private Float pressure;
     private Float windSpeed;
+    private Float uviIndex;
+    private Integer airPollution;
 
     public Weather() {
     }
 
-    public Weather(Timing timing, WeatherStatus weather, String weatherDescription, Temperature temperature, Integer humidity, Float pressure, Float windSpeed) {
+    public Weather(Timing timing, WeatherStatus weather, String weatherDescription, Temperature temperature,
+                   Integer humidity, Float pressure, Float windSpeed, Float uviIndex, Integer airPollution) {
         this.timing = timing;
         this.weather = weather;
         this.weatherDescription = weatherDescription;
@@ -23,6 +26,8 @@ public class Weather {
         this.humidity = humidity;
         this.pressure = pressure;
         this.windSpeed = windSpeed;
+        this.uviIndex = uviIndex;
+        this.airPollution = airPollution;
     }
 
     public Timing getTiming() {
@@ -79,5 +84,21 @@ public class Weather {
 
     public void setWindSpeed(Float windSpeed) {
         this.windSpeed = windSpeed;
+    }
+
+    public Float getUviIndex() {
+        return uviIndex;
+    }
+
+    public void setUviIndex(Float uviIndex) {
+        this.uviIndex = uviIndex;
+    }
+
+    public Integer getAirPollution() {
+        return airPollution;
+    }
+
+    public void setAirPollution(Integer airPollution) {
+        this.airPollution = airPollution;
     }
 }

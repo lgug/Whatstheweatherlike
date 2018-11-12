@@ -157,6 +157,8 @@ public class WeatherResultActivity extends AppCompatActivity {
             pressureTV.setText(Converter.convertPressure(sharedPreferences, weather.getPressure()));
             humidityTV.setText(weather.getHumidity().toString() + "%");
             windSpeedTV.setText(Converter.convertWindSpeed(sharedPreferences, weather.getWindSpeed()));
+            weatherManager.setUviIndexInView(getWindow().getDecorView().getRootView(), weather.getUviIndex(), isNight);
+            weatherManager.setAirQualityInView(getWindow().getDecorView().getRootView(), weather.getAirPollution(), isNight);
 
             if (isNight) {
                 getWindow().getDecorView().setBackgroundResource(R.drawable.fh);
@@ -164,9 +166,14 @@ public class WeatherResultActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.textView13)).setTextColor(color);
                 ((TextView) findViewById(R.id.textView14)).setTextColor(color);
                 ((TextView) findViewById(R.id.textView15)).setTextColor(color);
+                ((TextView) findViewById(R.id.textView23)).setTextColor(color);
+                ((TextView) findViewById(R.id.textView25)).setTextColor(color);
+                ((TextView) findViewById(R.id.textView24)).setTextColor(color);
+                ((TextView) findViewById(R.id.textView26)).setTextColor(color);
                 pressureTV.setTextColor(color);
                 humidityTV.setTextColor(color);
                 windSpeedTV.setTextColor(color);
+
                 TextView minTempTV = findViewById(R.id.textView11);
                 minTempTV.setTextColor(getColor(R.color.temperatureMin_night));
                 TextView avgTempTV = findViewById(R.id.textView10);
@@ -196,6 +203,8 @@ public class WeatherResultActivity extends AppCompatActivity {
         LinearLayout linearLayout2 = findViewById(R.id.linearL2);
         LinearLayout linearLayout3 = findViewById(R.id.LinearL3);
         LinearLayout linearLayout4 = findViewById(R.id.linearL4);
+        LinearLayout linearLayout5 = findViewById(R.id.linearL5);
+        LinearLayout linearLayout6 = findViewById(R.id.linearL6);
         subtitle.setText(message);
         subtitle.setTextColor(getColor(R.color.white));
         cityNameTV.setPadding(0,0,0, 180);
@@ -205,6 +214,8 @@ public class WeatherResultActivity extends AppCompatActivity {
         linearLayout2.setVisibility(View.GONE);
         linearLayout3.setVisibility(View.GONE);
         linearLayout4.setVisibility(View.GONE);
+        linearLayout5.setVisibility(View.GONE);
+        linearLayout6.setVisibility(View.GONE);
     }
 
     private void setAtmosphereCase(String weatherStatus, boolean isNight) {

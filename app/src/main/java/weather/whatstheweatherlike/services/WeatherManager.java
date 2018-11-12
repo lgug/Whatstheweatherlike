@@ -1,14 +1,15 @@
 package weather.whatstheweatherlike.services;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.LongSparseArray;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import weather.whatstheweatherlike.R;
 import weather.whatstheweatherlike.beans.City;
+import weather.whatstheweatherlike.beans.Coords;
 import weather.whatstheweatherlike.beans.CurrentForecast;
 import weather.whatstheweatherlike.beans.FiveDaysForecast;
 import weather.whatstheweatherlike.beans.Forecast;
@@ -48,10 +50,13 @@ import weather.whatstheweatherlike.utils.Converter;
 
 public class WeatherManager extends AsyncTask<InputData, Void, Forecast> {
 
-//    private final static String KEY = "ba331c2494b96ae8ddaefdc0f839c18d";
-    private final static String KEY = "5abbab06a4bb2db86621e0f48a5ccc3d";
+    private final static String KEY = "ba331c2494b96ae8ddaefdc0f839c18d";
+    private final static String UVI_INDEX_KEY = "5abbab06a4bb2db86621e0f48a5ccc3d";
+    private final static String AIR_QUALITY_KEY = "ECkRXmXrrgJ9Tg3st";
     private final static String CURRENT_WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?";
     private final static String FORECAST_WEATHER_URL = "https://api.openweathermap.org/data/2.5/forecast?";
+    private final static String UVI_INDEX_URL = "https://api.openweathermap.org/data/2.5/uvi?";
+    private final static String AIR_QUALITY_URL = "https://api.airvisual.com/v2/nearest_city?";
 
     private Exception exception;
 
@@ -152,7 +157,7 @@ public class WeatherManager extends AsyncTask<InputData, Void, Forecast> {
         return new FiveDaysForecast(city, keepOnlyDaily(map));
     }
 
-    private CurrentForecast adaptJsonToWeather(String json, City city, boolean coordsOnly) throws JSONException {
+    private CurrentForecast adaptJsonToWeather(String json, City city, boolean coordsOnly) throws JSONException, IOException {
         Weather weather = new Weather();
 
         JSONObject root = new JSONObject(json);
@@ -185,6 +190,9 @@ public class WeatherManager extends AsyncTask<InputData, Void, Forecast> {
         weather.setWindSpeed((float)(root.getJSONObject("wind").getDouble("speed")));
         weather.setTemperature(temperature);
         weather.setTiming(timing);
+
+        weather.setUviIndex(getUviIndex(city.getCoords()));
+        weather.setAirPollution(getAirQuality(city.getCoords()));
 
         return new CurrentForecast(city, weather);
     }
@@ -231,6 +239,38 @@ public class WeatherManager extends AsyncTask<InputData, Void, Forecast> {
         return result;
     }
 
+    private Float getUviIndex(Coords coords) throws IOException, JSONException {
+        URL url = new URL(UVI_INDEX_URL +
+                "lat=" + coords.getLatitude() + "&" +
+                "lon=" + coords.getLongitude() + "&" +
+                "appid=" + UVI_INDEX_KEY
+        );
+        String data;
+        try {
+            data = getData(url);
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+        JSONObject root = new JSONObject(data);
+        return (float) root.getDouble("value");
+    }
+
+    private Integer getAirQuality(Coords coords) throws IOException, JSONException {
+        URL url = new URL(AIR_QUALITY_URL +
+                "lat=" + coords.getLatitude() + "&" +
+                "lon=" + coords.getLongitude() + "&" +
+                "key=" + AIR_QUALITY_KEY
+        );
+        String data;
+        try {
+            data = getData(url);
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+        JSONObject root = new JSONObject(data);
+        return root.getJSONObject("data").getJSONObject("current").getJSONObject("pollution").getInt("aqius");
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint({"SetTextI18n"})
     public void setTemperatureInView(View view, SharedPreferences sharedPreferences, Temperature temperature) {
@@ -264,6 +304,139 @@ public class WeatherManager extends AsyncTask<InputData, Void, Forecast> {
         minTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMin_day, null));
         maxTemperature.setText(Converter.convertTemperature(sharedPreferences,temperature.getMaxTemperature()));
         maxTemperature.setTextColor(view.getContext().getResources().getColor(R.color.temperatureMax_day, null));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setUviIndexInView(View view, Float uviIndex, boolean isNight) {
+        TextView textView = view.findViewById(R.id.textView24);
+
+        if (uviIndex != null) {
+            String result = uviIndex + "  (";
+
+            int defaultColor = (isNight) ? R.color.white : R.color.black;
+            int color = defaultColor;
+            if (uviIndex <= 2.9) {
+                result += "Low";
+                color = R.color.level1;
+            } else if (uviIndex > 2.9 && uviIndex <= 5.9) {
+                result += "Moderate";
+                color = R.color.level3;
+            } else if (uviIndex > 5.9 && uviIndex <= 7.9) {
+                result += "High";
+                color = R.color.level4;
+            } else if (uviIndex > 7.9 && uviIndex <= 10.9) {
+                result += "Very high";
+                color = R.color.level5;
+            } else if (uviIndex > 11) {
+                result += "Extreme";
+                color = R.color.level6;
+            }
+            result += ")";
+
+            SpannableString spannableString = new SpannableString(result);
+            spannableString.setSpan(
+                    new ForegroundColorSpan(view.getContext().getColor(defaultColor)),
+                    0, result.lastIndexOf("(") + 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new ForegroundColorSpan(view.getContext().getColor(color)),
+                    result.indexOf("(") + 1, result.lastIndexOf(")"),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new ForegroundColorSpan(view.getContext().getColor(defaultColor)),
+                    result.indexOf(")"), result.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new StyleSpan(Typeface.ITALIC),
+                    0, result.lastIndexOf("(") + 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new StyleSpan(Typeface.BOLD_ITALIC),
+                    result.indexOf("(") + 1, result.lastIndexOf(")"),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new StyleSpan(Typeface.BOLD_ITALIC),
+                    result.indexOf(")"), result.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+
+            textView.setText(spannableString);
+        } else {
+            textView.setText("-");
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void setAirQualityInView(View view, Integer airQuality, boolean isNight) {
+        TextView textView = view.findViewById(R.id.textView26);
+
+        if (airQuality != null) {
+            String result = airQuality + "  (";
+
+            int defaultColor = (isNight) ? R.color.white : R.color.black;
+            int color = defaultColor;
+            if (airQuality <= 50) {
+                result += "Excellent";
+                color = R.color.level1;
+            } else if (airQuality > 50 && airQuality <= 100) {
+                result += "Good";
+                color = R.color.level2;
+            } else if (airQuality > 100 && airQuality <= 150) {
+                result += "Moderate";
+                color = R.color.level3;
+            } else if (airQuality > 150 && airQuality <= 200) {
+                result += "Unhealthy";
+                color = R.color.level4;
+            } else if (airQuality > 200 && airQuality <= 300) {
+                result += "Very unhealthy";
+                color = R.color.level5;
+            } else if (airQuality > 300) {
+                result += "Hazardous";
+                color = R.color.level6;
+            }
+            result += ")";
+
+            SpannableString spannableString = new SpannableString(result);
+            spannableString.setSpan(
+                    new ForegroundColorSpan(view.getContext().getColor(defaultColor)),
+                    0, result.lastIndexOf("(") + 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new ForegroundColorSpan(view.getContext().getColor(color)),
+                    result.indexOf("(") + 1, result.lastIndexOf(")"),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new ForegroundColorSpan(view.getContext().getColor(defaultColor)),
+                    result.indexOf(")"), result.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new StyleSpan(Typeface.ITALIC),
+                    0, result.lastIndexOf("(") + 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new StyleSpan(Typeface.BOLD_ITALIC),
+                    result.indexOf("(") + 1, result.lastIndexOf(")"),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            spannableString.setSpan(
+                    new StyleSpan(Typeface.BOLD_ITALIC),
+                    result.indexOf(")"), result.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+
+            textView.setText(spannableString);
+        } else {
+            textView.setText("-");
+        }
     }
 
     @Override

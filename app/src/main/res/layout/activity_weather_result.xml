@@ -32,14 +32,13 @@
             android:paddingBottom="5dp"
             android:text="City Name"
             android:textColor="@android:color/white"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textStyle="italic" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="233dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="240dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -92,10 +91,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingBottom="25dp"
+                    android:paddingBottom="23dp"
                     android:text="weather description"
                     android:textColor="@android:color/holo_blue_dark"
-                    android:textSize="24sp"
+                    android:textSize="23sp"
                     android:textStyle="italic" />
 
                 <LinearLayout
@@ -103,17 +102,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:paddingBottom="10dp">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
                         android:layout_weight="1"
                         android:gravity="right|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingRight="20dp"
-                        android:paddingTop="5dp"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="2"
                         android:shadowDy="2"
@@ -142,11 +141,11 @@
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
                         android:layout_weight="1"
                         android:gravity="left|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingLeft="20dp"
-                        android:paddingTop="5dp"
                         android:shadowColor="@android:color/black"
                         android:shadowDx="2"
                         android:shadowDy="2"
@@ -169,12 +168,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingRight="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="3dp"
                         android:text="Pressure:"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -183,12 +182,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingLeft="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="3dp"
                         android:text="?"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="italic" />
                 </LinearLayout>
 
@@ -205,12 +204,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingRight="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="3dp"
                         android:text="Humidity:"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -219,12 +218,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingLeft="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="3dp"
                         android:text="?"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="italic" />
                 </LinearLayout>
 
@@ -240,12 +239,12 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingRight="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="3dp"
                         android:text="Wind speed:"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -254,14 +253,85 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left|center"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="3dp"
                         android:paddingLeft="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingTop="3dp"
                         android:text="?"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="italic" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearL5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:paddingBottom="3dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="3dp"
+                        android:text="UVI index:"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="3dp"
+                        android:text="?"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="italic" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearL6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right|center"
+                        android:paddingRight="5dp"
+                        android:paddingTop="3dp"
+                        android:text="Air quality:"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="3dp"
+                        android:text="?"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:textStyle="italic" />
                 </LinearLayout>
 
             </LinearLayout>

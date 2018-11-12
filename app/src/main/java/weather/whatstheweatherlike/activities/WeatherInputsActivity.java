@@ -52,6 +52,8 @@ import weather.whatstheweatherlike.R;
 import weather.whatstheweatherlike.beans.City;
 import weather.whatstheweatherlike.beans.CityList;
 import weather.whatstheweatherlike.beans.Coords;
+import weather.whatstheweatherlike.beans.FiveDaysForecast;
+import weather.whatstheweatherlike.beans.Forecast;
 import weather.whatstheweatherlike.beans.InputData;
 import weather.whatstheweatherlike.beans.Temperature;
 import weather.whatstheweatherlike.beans.WeatherDate;
@@ -184,12 +186,14 @@ public class WeatherInputsActivity extends AppCompatActivity {
                 } else if (date.equals("")) {
                     Toast.makeText(getApplicationContext(), "Error! Date field must not be empty.", Toast.LENGTH_SHORT).show();
                     return;
-                } else if (!date.matches(Converter.DATE_PATTERN) && !date.toUpperCase().equals("NOW")) {
+                } else if (!date.matches(Converter.DATE_PATTERN) && !date.toUpperCase().equals(WeatherDate.NOW)) {
                     Toast.makeText(getApplicationContext(), "Error! Date field is not valid.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                goButton.setEnabled(false);
+                synchronized (getApplicationContext()) {
+                    goButton.setEnabled(false);
+                }
 
                 citiesManager.setCityName(city);
                 List<City> cities = null;

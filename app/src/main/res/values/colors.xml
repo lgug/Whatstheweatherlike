@@ -12,7 +12,14 @@
     <color name="temperature03">#00ff55</color>
     <color name="temperature04">#ffd633</color>
     <color name="temperature05">#ff6600</color>
-    <color name="temperature06">#ff0000</color>
+    <color name="temperature06">#ff0808</color>
+
+    <color name="level1">#00b300</color>
+    <color name="level2">#66ff66</color>
+    <color name="level3">#caca0c</color>
+    <color name="level4">#ff6f00</color>
+    <color name="level5">#ff0808</color>
+    <color name="level6">#99004d</color>
 
     <color name="temperatureMin_day">#000080</color>
     <color name="temperatureMax_day">#b30000</color>

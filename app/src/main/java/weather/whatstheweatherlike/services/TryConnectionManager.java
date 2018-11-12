@@ -18,7 +18,7 @@ public class TryConnectionManager extends AsyncTask<Void, Void, String>{
         if (ping) {
             boolean serverPing;
             try {
-                InetAddress cityServerAddress = InetAddress.getByName("ec2-18-184-69-104.eu-central-1.compute.amazonaws.com");
+                InetAddress cityServerAddress = InetAddress.getByName("ec2-3-120-27-26.eu-central-1.compute.amazonaws.com");
                 serverPing = cityServerAddress.isReachable(1000);
             } catch (IOException e) {
                 serverPing = false;

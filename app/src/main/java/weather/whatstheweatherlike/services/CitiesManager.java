@@ -26,7 +26,7 @@ import weather.whatstheweatherlike.beans.City;
 
 public class CitiesManager extends AsyncTask<Void, Void, List<City>> {
 
-    private final static String SERVER_DNS = "ec2-18-184-69-104.eu-central-1.compute.amazonaws.com";
+    private final static String SERVER_DNS = "ec2-3-120-27-26.eu-central-1.compute.amazonaws.com";
     private final static Integer SERVER_PORT = 8081;
 
     private String cityName;
